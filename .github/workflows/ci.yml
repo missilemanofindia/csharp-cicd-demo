@@ -22,11 +22,11 @@ jobs:
       run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true
 
     - name: Publish Application
-      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:publishUrl="${{ github.workspace }}/publish"
+      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:publishUrl="${{ github.workspace }}/WebApplication2//publish"
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'amit-csharp-app'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: '${{ github.workspace }}/publish'
+        package: '${{ github.workspace }}/WebApplication2//publish'
