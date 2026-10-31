@@ -22,7 +22,7 @@ jobs:
       run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true
 
     - name: Publish Application
-      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishUrl="${{ github.workspace }}/publish"
+      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:publishUrl="${{ github.workspace }}/publish"
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
