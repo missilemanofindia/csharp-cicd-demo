@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>MVC Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title mb-0 text-center">Simple Calculator</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                        @using (Html.BeginForm("Index", "Calculate", FormMethod.Post))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">First Number</label>
+                                <input type="number" step="any" name="num1" class="form-value form-control" value="@ViewBag.Num1" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Second Number</label>
+                                <input type="number" step="any" name="num2" class="form-value form-control" value="@ViewBag.Num2" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Operation</label>
+                                <select name="operation" class="form-select">
+                                    <option value="Addition" @(ViewBag.SelectedOp == "Addition" ? "selected" : "")>Addition (+)</option>
+                                    <option value="Subtraction" @(ViewBag.SelectedOp == "Subtraction" ? "selected" : "")>Subtraction (-)</option>
+                                    <option value="Multiplication" @(ViewBag.SelectedOp == "Multiplication" ? "selected" : "")>Multiplication (*)</option>
+                                    <option value="Division" @(ViewBag.SelectedOp == "Division" ? "selected" : "")>Division (/)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Calculate</button>
+                        }
+
+                        @if (ViewBag.Result != null)
+                        {
+                            <div class="alert alert-success mt-4 text-center">
+                                <strong>Result: @ViewBag.Result</strong>
+                            </div>
+                        }
+                        
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger mt-4 text-center">
+                                <strong>@ViewBag.Error</strong>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
