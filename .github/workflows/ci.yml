@@ -15,11 +15,6 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2  # <--- Windows वर MSBuild सेट करतो
 
-    - name: Install .NET Framework 4.6.1 Targeting Pack
-      run: |
-        Invoke-WebRequest -Uri "https://download.visualstudio.microsoft.com/download/pr/20e69107-5246-4069-b2aef-2abd4797cec0/da837d36feb2c206d2cc2383848a6042/ndp461-devpack-kb3105179-enu.exe" -OutFile "ndp461_devpack.exe"
-        Start-Process -FilePath "ndp461_devpack.exe" -ArgumentList "/q /norestart" -Wait
-
     - name: Restore NuGet Packages
       run: nuget restore WebApplication2/WebApplication2.sln
 
