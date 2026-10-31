@@ -1,40 +1,32 @@
-name: .NET Core CI
+name: .NET Framework CI/CD
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-    
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest   # <--- अत्यंत महत्त्वाचे: Linux ऐवजी Windows रनर वापरणे
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 10.0.x
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2  # <--- Windows वर MSBuild सेट करतो
 
     - name: Restore NuGet Packages
-      run: dotnet restore MyAppsolution.slnx
+      run: nuget restore WebApplication2/WebApplication2.sln
 
     - name: Build Application
-      run: dotnet build WebApplication2/WebApplication2.sln --no-restore --configuration Release
+      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true
 
-    - name: Execute Tests
-      run: dotnet test WebApplication2/WebApplication2.sln --no-build --configuration Release
-
-    - name: Publish Calculator Application
-      run: dotnet publish WebApplication2 -c Release -o ./publish
+    - name: Publish Application
+      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishUrl="${{ github.workspace }}/publish"
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'amit-csharp-app'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ./publish
-
+        package: '${{ github.workspace }}/publish'
