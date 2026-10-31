@@ -16,13 +16,13 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore NuGet Packages
-      run: nuget restore WebApplication2.sln
+      run: nuget restore WebApplication2/WebApplication2.sln
 
     - name: Build Application
-      run: msbuild WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true
+      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true
 
     - name: Publish Application
-      run: msbuild WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:publishUrl="${{ github.workspace }}/publish"
+      run: msbuild WebApplication2/WebApplication2.sln /p:Configuration=Release /p:DeployOnBuild=true /p:WebPublishMethod=FileSystem /p:publishUrl="${{ github.workspace }}/publish"
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
