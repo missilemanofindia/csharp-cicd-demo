@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+    
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,13 +23,13 @@ jobs:
       run: dotnet restore MyAppsolution.slnx
 
     - name: Build Application
-      run: dotnet build MyAppsolution.slnx --no-restore --configuration Release
+      run: dotnet build WebApplication2/WebApplication2.sln --no-restore --configuration Release
 
     - name: Execute Tests
-      run: dotnet test MyAppsolution.slnx --no-build --configuration Release
+      run: dotnet test WebApplication2/WebApplication2.sln --no-build --configuration Release
 
-    - name: Publish Application
-      run: dotnet publish MyAppsolution.slnx -c Release -o ./publish
+    - name: Publish Calculator Application
+      run: dotnet publish WebApplication2 -c Release -o ./publish
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
